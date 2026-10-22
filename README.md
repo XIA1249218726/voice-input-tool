@@ -1,5 +1,7 @@
 # 语音输入工具 · VoiceInputTool
 
+[![CI](https://github.com/XIA1249218726/voice-input-tool/actions/workflows/ci.yml/badge.svg)](https://github.com/XIA1249218726/voice-input-tool/actions/workflows/ci.yml)
+[![Release](https://github.com/XIA1249218726/voice-input-tool/actions/workflows/release.yml/badge.svg)](https://github.com/XIA1249218726/voice-input-tool/actions/workflows/release.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 ![Platform](https://img.shields.io/badge/Platform-Windows%2010%2F11%20x64-blue)
 ![Python](https://img.shields.io/badge/Python-3.12-yellow)
