@@ -3,6 +3,3 @@ contact_links:
   - name: 安全问题 / Security issue
     url: https://github.com/XIA1249218726/voice-input-tool/security/advisories/new
     about: 请勿公开报告安全漏洞，使用 GitHub Security Advisories 私下联系维护者。
-  - name: 使用问题 / Q&A
-    url: https://github.com/XIA1249218726/voice-input-tool/discussions
-    about: 安装、麦克风、游戏兼容性问题可以先在 Discussions 讨论。
