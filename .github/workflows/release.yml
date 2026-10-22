@@ -51,6 +51,12 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r build/requirements.txt -r build/requirements-build.txt
 
+      - name: Cache SenseVoice model
+        uses: actions/cache@v4
+        with:
+          path: models/sense-voice
+          key: sensevoice-int8-2024-07-17
+
       - name: Download offline model (228 MB)
         shell: pwsh
         run: powershell -NoProfile -ExecutionPolicy Bypass -File scripts\download-model.ps1
@@ -76,6 +82,16 @@ jobs:
           Compress-Archive -Path 'dist\语音输入工具\*' -DestinationPath $zip -CompressionLevel Optimal
           Get-Item $zip | Format-List Name,Length
 
+      - name: Generate checksums
+        shell: pwsh
+        run: |
+          $files = Get-ChildItem 'dist\VoiceInputTool-Setup-*.exe','dist\VoiceInputTool-*-portable.zip'
+          $lines = $files | ForEach-Object {
+            "$((Get-FileHash $_.FullName -Algorithm SHA256).Hash)  $($_.Name)"
+          }
+          $lines | Set-Content 'dist\SHA256SUMS.txt' -Encoding ascii
+          Get-Content 'dist\SHA256SUMS.txt'
+
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -85,4 +101,5 @@ jobs:
           files: |
             dist/VoiceInputTool-Setup-*.exe
             dist/VoiceInputTool-*-portable.zip
+            dist/SHA256SUMS.txt
           fail_on_unmatched_files: true
