@@ -45,3 +45,9 @@ _build/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# 临时日志
+_actions-watch.txt
+_*.out
+_*.err
+
