@@ -1,0 +1,29 @@
+{
+  "hotkey": "f8",
+  "trigger_mode": "hold",
+  "max_record_seconds": 15.0,
+  "engine": "local",
+  "language": "zh",
+  "use_itn": true,
+  "num_threads": 4,
+  "device": "",
+  "auto_enter_chat": true,
+  "auto_send": true,
+  "chat_open_delay": 0.35,
+  "char_delay": 0.005,
+  "send_delay": 0.15,
+  "only_when_game": true,
+  "game_process": "VALORANT",
+  "prefix": "",
+  "strip_punct": true,
+  "only_clipboard": false,
+  "beep": true,
+  "always_on_top": false,
+  "replacements": {
+    "a大": "A大",
+    "b大": "B大"
+  },
+  "api_base": "https://api.siliconflow.cn/v1",
+  "api_key": "",
+  "api_model": "FunAudioLLM/SenseVoiceSmall"
+}

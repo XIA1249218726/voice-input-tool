@@ -1,0 +1,88 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version without leading v (e.g. 1.0.0)'
+        required: true
+        default: '1.0.0'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and publish Windows release
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve version
+        id: version
+        shell: pwsh
+        run: |
+          $v = if ('${{ github.event_name }}' -eq 'workflow_dispatch') {
+            '${{ github.event.inputs.version }}'
+          } else {
+            '${{ github.ref_name }}'.TrimStart('v')
+          }
+          if (-not $v) { throw 'Empty version' }
+          "version=$v" >> $env:GITHUB_OUTPUT
+          Write-Host "Building version $v"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: |
+            build/requirements.txt
+            build/requirements-build.txt
+
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r build/requirements.txt -r build/requirements-build.txt
+
+      - name: Download offline model (228 MB)
+        shell: pwsh
+        run: powershell -NoProfile -ExecutionPolicy Bypass -File scripts\download-model.ps1
+
+      - name: Build portable app
+        shell: pwsh
+        run: powershell -NoProfile -ExecutionPolicy Bypass -File build\build_app.ps1 -SkipInstall
+
+      - name: Install NSIS
+        shell: pwsh
+        run: choco install nsis --no-progress -y
+
+      - name: Build installer
+        shell: pwsh
+        run: |
+          powershell -NoProfile -ExecutionPolicy Bypass -File build\build_installer.ps1 -Version '${{ steps.version.outputs.version }}'
+
+      - name: Create portable zip
+        shell: pwsh
+        run: |
+          $version = '${{ steps.version.outputs.version }}'
+          $zip = "dist\VoiceInputTool-$version-portable.zip"
+          Compress-Archive -Path 'dist\语音输入工具\*' -DestinationPath $zip -CompressionLevel Optimal
+          Get-Item $zip | Format-List Name,Length
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: VoiceInputTool v${{ steps.version.outputs.version }}
+          tag_name: v${{ steps.version.outputs.version }}
+          generate_release_notes: true
+          files: |
+            dist/VoiceInputTool-Setup-*.exe
+            dist/VoiceInputTool-*-portable.zip
+          fail_on_unmatched_files: true

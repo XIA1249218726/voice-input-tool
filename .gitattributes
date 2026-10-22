@@ -1,0 +1,27 @@
+* text=auto
+
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.txt text eol=lf
+
+# Windows 脚本保持 CRLF（PowerShell 5.1 / cmd 友好）
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.nsi text eol=crlf
+
+*.ico binary
+*.png binary
+*.jpg binary
+*.onnx binary
+*.dll binary
+*.exe binary
+
+.gitignore text eol=lf
+.gitattributes text eol=lf
+LICENSE text eol=lf
+.editorconfig text eol=lf
+

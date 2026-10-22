@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+
+# 运行数据 / 日志（每个人本机不同）
+config.json
+.config-*.json
+logs/
+userdata/
+*.log
+
+# 离线模型（约 228 MB，使用 scripts/download-model.ps1 获取）
+models/sense-voice/
+models/_extract/
+models/*.tar.bz2
+models/*.zip
+
+# 打包 / 运行环境
+runtime/
+dist/
+dist_raw/
+_build/
+*.spec
+
+# 发布产物
+*.exe
+*.msi
+*.msix
+*.zip
+*.7z
+
+# IDE / 系统
+.vscode/
+.idea/
+*.suo
+*.user
+.DS_Store
+Thumbs.db
+desktop.ini

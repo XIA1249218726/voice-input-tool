@@ -1,0 +1,5 @@
+numpy>=1.26,<3
+sounddevice>=0.4.6,<1
+sherpa-onnx>=1.10,<2
+pynput>=1.7,<2
+requests>=2.31,<3
